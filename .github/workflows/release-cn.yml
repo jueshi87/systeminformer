@@ -1,0 +1,49 @@
+name: 'release-cn'
+
+on:
+  push:
+    branches: ['SystemInformer-cn']
+
+permissions:
+  contents: write
+
+jobs:
+  build-release-cn:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: NuGet Cache
+      uses: actions/cache@v4
+      with:
+        path: packages
+        key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.config') }}
+        restore-keys: nuget-${{ runner.os }}-
+
+    - name: Nuget Restore
+      shell: cmd
+      working-directory: ${{github.workspace}}
+      run: nuget restore .\packages.config -PackagesDirectory .\packages\
+
+    - name: Build Tools
+      shell: cmd
+      working-directory: ${{github.workspace}}
+      run: build\build_init.cmd
+
+    - name: Build Release
+      shell: cmd
+      working-directory: ${{github.workspace}}
+      run: build\build_release.cmd
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: cn-${{ github.sha }}
+        name: System Informer (CN) - ${{ github.sha }}
+        draft: false
+        prerelease: false
+        files: |
+          build/output/systeminformer-build-bin.zip
+          build/output/systeminformer-build-release-setup.exe
