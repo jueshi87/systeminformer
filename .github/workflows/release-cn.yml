@@ -36,12 +36,19 @@ jobs:
       working-directory: ${{github.workspace}}
       run: build\build_release.cmd
 
+    - name: Get Version
+      id: get_version
+      shell: pwsh
+      run: |
+        $version = (Get-Item "bin/Release64/SystemInformer.exe").VersionInfo.FileVersion
+        echo "VERSION=$version" >> $env:GITHUB_ENV
+
     - name: Create Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: cn-${{ github.sha }}
-        name: System Informer (CN)
+        tag_name: v${{ env.VERSION }}-cn
+        name: System Informer v${{ env.VERSION }} (CN)
         draft: false
         prerelease: false
         files: |
