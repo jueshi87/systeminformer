@@ -197,8 +197,8 @@ static VOID PhpOptionsShowHideTreeViewItem(
     _In_ BOOLEAN Hide
     )
 {
-    static CONST PH_STRINGREF generalName = PH_STRINGREF_INIT(L"General");
-    static CONST PH_STRINGREF advancedName = PH_STRINGREF_INIT(L"Advanced");
+    static CONST PH_STRINGREF generalName = PH_STRINGREF_INIT(L"常规");
+    static CONST PH_STRINGREF advancedName = PH_STRINGREF_INIT(L"高级");
 
     if (Hide)
     {
@@ -245,7 +245,7 @@ static VOID PhReloadGeneralSection(
     VOID
     )
 {
-    static PH_STRINGREF generalName = PH_STRINGREF_INIT(L"General");
+    static PH_STRINGREF generalName = PH_STRINGREF_INIT(L"常规");
 
     GeneralListViewStateInitializing = TRUE;
     PhpAdvancedPageLoad(PhOptionsFindSection(&generalName)->DialogHandle, TRUE);
@@ -329,11 +329,11 @@ INT_PTR CALLBACK PhOptionsDialogProc(
                 SectionList = PhCreateList(8);
                 CurrentSection = NULL;
 
-                section = PhOptionsCreateSection(L"General", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTGENERAL), PhpOptionsGeneralDlgProc, NULL);
-                PhOptionsCreateSectionAdvanced(L"Advanced", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTADVANCED), PhpOptionsAdvancedDlgProc, NULL);
-                PhOptionsCreateSection(L"Highlighting", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTHIGHLIGHTING), PhpOptionsHighlightingDlgProc, NULL);
-                PhOptionsCreateSection(L"Graphs", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTGRAPHS), PhpOptionsGraphsDlgProc, NULL);
-                PhOptionsCreateSection(L"Plugins", PhInstanceHandle, MAKEINTRESOURCE(IDD_PLUGINS), PhPluginsDlgProc, NULL);
+                section = PhOptionsCreateSection(L"常规", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTGENERAL), PhpOptionsGeneralDlgProc, NULL);
+                PhOptionsCreateSectionAdvanced(L"高级", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTADVANCED), PhpOptionsAdvancedDlgProc, NULL);
+                PhOptionsCreateSection(L"高亮", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTHIGHLIGHTING), PhpOptionsHighlightingDlgProc, NULL);
+                PhOptionsCreateSection(L"图表", PhInstanceHandle, MAKEINTRESOURCE(IDD_OPTGRAPHS), PhpOptionsGraphsDlgProc, NULL);
+                PhOptionsCreateSection(L"插件", PhInstanceHandle, MAKEINTRESOURCE(IDD_PLUGINS), PhPluginsDlgProc, NULL);
 
                 if (PhPluginsEnabled)
                 {
@@ -372,7 +372,7 @@ INT_PTR CALLBACK PhOptionsDialogProc(
             {
                 section = SectionList->Items[i];
 
-                if (PhEqualStringRef2(&section->Name, L"General", TRUE))
+                if (PhEqualStringRef2(&section->Name, L"常规", TRUE))
                 {
                     PhpAdvancedPageSave(section->DialogHandle);
                 }

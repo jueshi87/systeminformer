@@ -41,7 +41,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: cn-${{ github.sha }}
-        name: System Informer (CN) - ${{ github.sha }}
+        name: System Informer (CN)
         draft: false
         prerelease: false
         files: |
